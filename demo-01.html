@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="iviewApp">
+        <span>Message:{{ msg }}</span>
+
+        <span>computed  a : {{ a }}</span>
+    </div>
+
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+    <script type="text/javascript">
+        // var MyComponent = Vue.extend({
+        // template:'<div>Hello!</div>'
+        // })
+
+        // new MyComponent().$mount("#app");
+
+
+
+        var data = { a: 1, msg: 'iviewApp1' };
+
+        var ivue = new Vue({
+            el: "#iviewApp",
+
+            data: data,
+
+            computed: {
+                aPulg: {
+                    get: function () {
+                        return this.a + 1
+                    },
+                    set: function (v) {
+                        this.a = v - 1;
+                    }
+                }
+            },
+
+            beforeCreate: function () {
+
+                console.log('this is beforeCreate!');
+            },
+
+            created: function () {
+
+                console.log('this is created!');
+            },
+
+            beforeMount: function () {
+
+                console.log('this is beforeMount!');
+            },
+
+            mounted: function () {
+
+                console.log('this is mounted!');
+            },
+
+            beforeUpdate: function () {
+
+                console.log('this is beforeUpdate!');
+            },
+
+            updated: function () {
+
+                console.log('this is updated!');
+            },
+
+            beforeDestroy: function () {
+
+                console.log('this is beforeDestroy!');
+            },
+
+            destroyed: function () {
+
+                console.log('this is destroyed!');
+            },
+        });
+
+        console.log(data.a == ivue.a);
+
+        console.log(ivue.aPulg);
+        console.log(ivue.aPulg = 3);
+        console.log(ivue.a);
+    </script>
+</body>
+
+</html>
