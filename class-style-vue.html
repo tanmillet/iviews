@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="demo0301">
+    <div class="static" v-bind:class="{active:isActive , 'text-danger':hasError}"></div>
+</div>
+
+<div id="demo0302">
+    <div class="static" v-bind:class="classObject"></div>
+</div>
+
+<div id="demo0303">
+    <div class="static" v-bind:class="classObject"></div>
+</div>
+
+<div id="demo0304">
+    <div v-bind:class="[activeClass, errorClass]"></div>
+</div>
+
+<!--绑定内联样式-->
+<div id="demo0305">
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+    var ivue0305 = new Vue({
+        el: '#demo0305',
+        data: {
+            activeColor: 'red',
+            fontSize: 20
+        }
+    })
+
+    var ivue0301 = new Vue({
+        el: '#demo0301',
+        data: {
+            isActive: true,
+            hasError: false
+        }
+    })
+
+    var ivue0302 = new Vue({
+        el: '#demo0302',
+        data: {
+            classObject: {
+                active: true,
+                'text-danger': false
+            }
+        }
+    })
+
+    var ivue0303 = new Vue({
+        el: '#demo0303',
+        data: {
+            isActive: true,
+            error: null
+        },
+        computed: {
+            classObject: function () {
+                return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal',
+                }
+            }
+        }
+    })
+
+    var ivue0304 = new Vue({
+        el: '#demo0304',
+        data: {
+            activeClass: 'active',
+            errorClass: 'text-danger'
+        }
+    })
+
+</script>
+</body>
+</html>
