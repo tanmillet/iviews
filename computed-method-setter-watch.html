@@ -6,19 +6,66 @@
 </head>
 <body>
 
+<!--可以将同一函数定义为一个 method 而不是一个计算属性。对于最终的结果，两种方式确实是相同的。
+然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。-->
 <div id="demo200">{{ reversedMessage }}</div>
 <div id="demo2001">{{ reversedMessage() }}</div>
+<!--Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性-->
 <div id="demo201">{{ fullName }}</div>
 <div id="demo202">{{ fullName }}</div>
 <div id="demo203">{{ fullName }}</div>
 
+
+<div id="watch-example">
+    <p>
+        Ask a yes/no question:
+        <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+</div>
+
 <script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script type="text/javascript">
+
+    var ivuewatch = new Vue({
+        el: '#watch-example',
+        data: {
+            question: '',
+            answer: 'I cannot give you an answer until you ask a question!'
+        },
+        watch: {
+            question: function (newQuestion) {
+                this.answer = 'Waiting for you to stop typing...';
+                this.getAnswer();
+            }
+        },
+        methods: {
+            getAnswer: _.debounce(
+                function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = 'Questions usually contain a question mark. ;-)'
+                        return
+                    }
+                    this.answer = 'Thinking...'
+                    var vm = this
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            vm.answer = _.capitalize(response.data.answer)
+                        })
+                        .catch(function (error) {
+                            vm.answer = 'Error! Could not reach the API. ' + error
+                        })
+                }, 500
+            )
+        }
+    })
 
     var ivue00 = new Vue({
         el: '#demo200',
         data: {
-            message:'testst2123'
+            message: 'testst2123'
         },
         computed: {
             reversedMessage: function () {
@@ -31,7 +78,7 @@
     var ivue001 = new Vue({
         el: '#demo2001',
         data: {
-            message:'testst2123'
+            message: 'testst2123'
         },
         methods: {
             reversedMessage: function () {
