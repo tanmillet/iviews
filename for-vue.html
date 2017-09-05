@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul id="demo0501">
+    <li v-for="item in items">
+        {{ item.message }}
+    </li>
+</ul>
+
+<ul id="demo0502">
+    <li v-for="(item , index) in items">
+        {{ parentMessage }} - {{ index }} - {{ item.message }}
+    </li>
+</ul>
+
+<!--在遍历对象时，是按 Object.keys() 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。-->
+<ul id="demo0503">
+    <li v-for="(item , key , index) of items">
+        {{ index }} : {{ key }} : {{ item }}
+    </li>
+</ul>
+
+<ul id="demo0504">
+    <li v-for="n of evenNumbers">
+        {{ n }}
+    </li>
+</ul>
+
+<ul id="demo0505">
+    <li v-for="n of even(numbers)">
+        {{ n }}
+    </li>
+</ul>
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+    var ivue0501 = new Vue({
+        el: '#demo0501',
+        data: {
+            items: [
+                {
+                    message: 'Test1'
+                },
+                {
+                    message: 'Test2'
+                },
+            ]
+        }
+    })
+
+    var demo0502 = new Vue({
+        el: '#demo0502',
+        data: {
+            parentMessage: 'pTest',
+            items: [
+                {
+                    message: 'Test1'
+                },
+                {
+                    message: 'Test2'
+                },
+            ]
+        }
+    })
+
+    var demo0503 = new Vue({
+        el: '#demo0503',
+        data: {
+            items: {
+                firstName: 'terry',
+                lastName: 'terry',
+                age: 20
+            }
+        }
+    })
+
+    var demo0505 = new Vue({
+        el: '#demo0505',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        methods: {
+            even: function (numbers) {
+                return this.numbers.filter(function (number) {
+                    return number % 2 === 0
+                })
+            }
+        }
+    })
+
+    var demo0504 = new Vue({
+        el: '#demo0504',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        computed: {
+            evenNumbers: function () {
+                return this.numbers.filter(function (number) {
+                    return number % 2 === 0
+                })
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
