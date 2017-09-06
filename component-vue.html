@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="demo0801">
+    <my-component></my-component>
+</div>
+
+<div id="demo0802">
+    <my-component1></my-component1>
+</div>
+
+<div id="demo0803">
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+</div>
+
+<div id="demo0804">
+    <child my-message="hello!"></child>
+
+    <input v-model="parentMsg">
+    <br>
+    <child2 v-bind:my-message1="parentMsg"></child2>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+
+    Vue.component('child', {
+        props: ['myMessage'], //父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息
+        template: '<span>{{myMessage}}</span>'
+    })
+
+    Vue.component('child2', {
+        props: ['myMessage1'], //父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息
+        template: '<span>{{myMessage1}}</span>'
+    })
+
+    Vue.component('my-component', {
+        template: '<div>this is global component</div>'
+    });
+
+    var ivue0801 = new Vue({
+        el: '#demo0801'
+    })
+
+    var ivue0802 = new Vue({
+        el: '#demo0802',
+        components: {
+            'my-component1': {
+                template: '<div>A custom component!</div>'
+            }
+        }
+    })
+
+    //全局和局部
+    var data = {counter: 0}
+
+    /*
+     Vue.component('simple-counter', {
+     template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+     data: function () {
+     return data
+     }
+     })
+     */
+
+    Vue.component('simple-counter', {
+        template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+        data: function () {
+            return {counter: 0}
+        }
+    })
+
+    var ivue0803 = new Vue({
+        el: '#demo0803'
+    })
+
+    /*父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息。*/
+
+    /*HTML 特性是不区分大小写的。所以，当使用的不是字符串模板，camelCased (驼峰式) 命名的 prop 需要转换为相对应的 kebab-case (短横线隔开式) 命名：*/
+    var ivue0804 = new Vue({
+        el: '#demo0804',
+        data: {
+            parentMsg: ''
+        }
+    })
+
+    /*注意在 JavaScript 中对象和数组是引用类型，指向同一个内存空间，如果 prop 是一个对象或数组，在子组件内部改变它会影响父组件的状态。*/
+</script>
+</body>
+</html>
