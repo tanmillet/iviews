@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="demo0701">
+    <input type="text" placeholder="edit me" v-model="message">
+    <p>Message is : {{ message }}</p>
+</div>
+
+<div id="demo0702">
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{ checked }}</label>
+
+    <div id='example-3'>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+    </div>
+
+    <div id="example-4">
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+    </div>
+
+    <div id="example-5">
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+    </div>
+
+    <div id="example-6">
+        <select v-model="selected1" multiple style="width: 50px">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <br>
+        <span>Selected: {{ selected1 }}</span>
+    </div>
+
+    <div id="example-7">
+        <select v-model="selected2">
+            <option v-for="option in options" v-bind:value="option.value"> {{ option.text }}</option>
+        </select>
+        <br>
+        <span>Selected: {{ selected2 }}</span>
+    </div>
+
+    <div id="example-8">
+        <input type="checkbox" v-model="terry" v-bind:true-value="a" v-bind:false-value="b">
+        <p>terry value: {{ terry }}</p>
+    </div>
+
+    <div>
+        <input v-model.trim.lazy="msg">
+        <p>{{ msg }}</p>
+        <input v-model="msg1">
+        <p>{{ msg1 }}</p>
+        <br>
+        <br>
+        <input v-model.number="age" type="number">
+    </div>
+
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+
+    var ivue0701 = new Vue({
+        el: '#demo0701',
+        data: {
+            message: ''
+        }
+    })
+
+    var demo0702 = new Vue({
+        el: '#demo0702',
+        data: {
+            age: 0,
+            checked: false,
+            checkedNames: [],
+            picked: '',
+            selected: 'A',
+            selected1: [],
+            selected2: 'B',
+            options: [
+                {text: 'one', value: 'A'},
+                {text: 'two', value: 'B'},
+                {text: 'three', value: 'C'}
+            ],
+            terry: 'dsafdsafs',
+            a: 'dasfdsafd -   a',
+            b: 'dasfdsafd  -        b',
+            msg: '',
+            msg1: '',
+        },
+//        computed: {
+//            terry: {
+//                get: function () {
+//                    return this.a
+//                },
+//                set: function (val) {
+//                    this.a = 'adsfdsafda00000000000'
+//                }
+//            }
+//        }
+    })
+</script>
+</body>
+</html>
