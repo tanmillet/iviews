@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="demo0901">
+    <p>{{ total }}</p>
+    <button-counter v-on:increment='incrementTotal'></button-counter>
+    <button-counter v-on:increment='incrementTotal'></button-counter>
+</div>
+
+<div id="demo0902">
+    <div>
+        <h1>dafdsf</h1>
+        <terry>
+            <!--<p>这是一些初始内容</p>-->
+            <!--<p>这是更多的初始内容</p>-->
+        </terry>
+    </div>
+</div>
+
+<div id="demo0903">
+    <app-layout>
+        <h1 slot="header">这里可能是一个页面标题</h1>
+        <p>主要内容的一个段落。</p>
+        <p>另一个主要段落。</p>
+        <p slot="footer">这里有一些联系信息</p>
+    </app-layout>
+</div>
+
+<div id="demo0904">
+    <home></home>
+
+    <keep-alive>
+        <my-home v-bind:is='currentView'></my-home>
+    </keep-alive>
+
+    <footer1></footer1>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+
+    Vue.component('button-counter', {
+        template: '<button v-on:click="incrementCounter">{{ counter }}</button>',
+        data: function () {
+            return {counter: 0}
+        },
+        methods: {
+            incrementCounter: function () {
+                this.counter += 1
+                this.$emit('increment')
+            }
+        }
+    })
+
+    /*<slot> 标签中的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。*/
+    Vue.component('terry', {
+        template: '<div><h2>我是子组件的标题</h2> <slot>只有在没有要分发的内容时才会显示。</slot> </div>'
+    })
+
+    new Vue({
+        el: '#demo0901',
+        data: {
+            total: 0
+        },
+        methods: {
+            incrementTotal: function () {
+                this.total += 1;
+            }
+        }
+    })
+
+    new Vue({
+        el: '#demo0902'
+    })
+
+    Vue.component('app-layout', {
+        template: '<div class="container">' +
+        '<header>' +
+        '<slot name="header"></slot>' +
+        '</header>' +
+        '<main>' +
+        '<slot></slot>' +
+        '</main>' +
+        '<footer>' +
+        '<slot name="footer"></slot>' +
+        '</footer>' +
+        '</div>'
+    })
+
+    new Vue({
+        el: '#demo0903'
+    })
+
+    var footer2 = {
+        template: '<p>Welcome footer2!</p>'
+    }
+
+    new Vue({
+        el: '#demo0904',
+        data: {
+            currentView: 'home'
+        },
+        components: {
+            home: {
+                template: '<p>Welcome home!</p>'
+            },
+            footer1: footer2
+        }
+    })
+
+</script>
+</body>
+</html>
